@@ -1,0 +1,16 @@
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #FAFAFA;
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Edge */
+}
+
+body {
+  height:100%;
+  width: 100%;
+
+}

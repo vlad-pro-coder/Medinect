@@ -1,0 +1,317 @@
+.btn {
+  width: 100%;
+  margin-bottom: 100px;
+  z-index: 1;
+}
+
+.btn:last-child {
+  margin-bottom: 0;
+}
+
+#headerTitle {
+  text-align: center;
+  color: white;
+}
+
+
+/* TEXT LOGIN NEXT CSS */
+
+.Logintext {
+  display: flex;
+  position: relative;
+  align-items: stretch;
+}
+
+/* LOGIN CSS */
+
+.Logintext {
+  position: relative;
+  z-index: 1;
+  min-width: 600px;
+  min-height: 400px;
+}
+
+
+/* REGISTER CSS */
+
+.styled-btn {
+  background-color: #1c1f1c;
+  /* Green background */
+  border: none;
+  /* Remove borders */
+  color: white;
+  /* White text */
+  padding: 15px 32px;
+  /* Some padding */
+  text-align: center;
+  /* Center text */
+  text-decoration: none;
+  /* Remove underline */
+  display: inline-block;
+  /* Make the button inline-block */
+  font-size: 16px;
+  /* Increase font size */
+  margin: 4px 2px;
+  /* Some margin */
+  transition: background-color 0.3s, box-shadow 0.3s;
+  /* Smooth transition */
+  cursor: pointer;
+  /* Pointer/hand icon */
+  border-radius: 12px;
+  /* Rounded corners */
+}
+
+.styled-btn:hover {
+  background-color: #45a049;
+  /* Darker green on hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  /* Shadow effect on hover */
+}
+
+.test {
+  background-color: #4CAF50;
+  width: 60%;
+}
+
+.signupasButtons {
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+  gap: 10px;
+}
+
+.signupasButton {
+  width: 50%;
+  border-radius: 10px 10px 0px 0px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+  background-color: #3498db;
+  border: none;
+}
+
+.inputsContainer {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.wholeregister {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  width: 1vw;
+  height: 65vh;
+  min-width: 800px;
+}
+
+.registertext {
+  display: flex;
+  background-color: #151714;
+}
+
+.registerform {
+  width: 50%;
+  padding: 15px;
+}
+
+/* some button */
+
+.Input {
+  width: 100%;
+  padding: 5px;
+  margin-right: 5px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border: 2px solid #282424;
+  border-radius: 4px;
+  background-color: #282424;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  color: white;
+}
+
+.Input:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
+
+
+/* START QUOTE */
+
+.random-suggestion-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  height: 100%;
+}
+
+.icon-quote {
+  color: rgb(59, 59, 59);
+  /* Vibrant color for the icon */
+  margin-bottom: 30px;
+
+}
+
+.suggestion {
+  font-family: 'Lato', sans-serif;
+  /* Clean font */
+  font-size: 18px;
+  font-weight: 700;
+  color: #444;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+
+/* END QUOTE */
+
+
+/* START EMAIL VERIFICATION SCREEN */
+
+/* Email Verification Page Styling */
+.email-verification-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #3498db;
+  /* Blue Background */
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  /* Clean, modern font */
+  text-align: center;
+}
+
+.email-verification-message {
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Semi-transparent background for text */
+  padding: 30px 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+.email-verification-message p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+/* END EMAIL VERIFICATION SCREEN */
+
+/* START EMAIL PASSWORD CHANGE SCREEN */
+
+.password-reset-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2; /* Light background */
+  font-family: 'Roboto', sans-serif; /* Modern font */
+}
+
+.password-reset-box {
+  background-color: white;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.password-reset-box h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.password-reset-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.password-reset-box input:focus {
+  border-color: #3498db; /* Focus border color */
+}
+
+.password-reset-box button {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.password-reset-box button:hover {
+  background-color: #2980b9;
+}
+
+/* END EMAIL PASSWORD CHANGE SCREEN */
+
+/* START EMAIL RELATED BUTTONS */
+
+/* Base styles for buttons to look like links */
+.button-link {
+  background: none;
+  border: none;
+  color: #007bff; /* Link-like color */
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+
+/* Hover and focus effects for accessibility */
+.button-link:hover,
+.button-link:focus {
+  color: #0056b3;
+  text-decoration: none;
+  outline: none;
+}
+
+/* Style for the password reset button */
+.reset-button {
+  font-weight: bold;
+  color: #28a745; /* Green for password reset */
+}
+
+.reset-button:hover,
+.reset-button:focus {
+  color: #218838;
+}
+
+/* Style for the navigation button */
+.navigation-button {
+  color: #007bff; /* Blue for navigation */
+}
+
+.navigation-button:hover,
+.navigation-button:focus {
+  color: #0056b3;
+}
+
+/* END EMAIL RELATED BUTTONS */

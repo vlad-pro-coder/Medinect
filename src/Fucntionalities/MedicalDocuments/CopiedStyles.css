@@ -1,0 +1,87 @@
+.submit-button {
+    background-color: #007BFF;
+    /* Blue background */
+    color: #ffffff;
+    /* White text */
+    font-size: 16px;
+    /* Font size */
+    font-weight: bold;
+    /* Bold text */
+    padding: 10px 20px;
+    /* Padding for a comfortable click area */
+    border: none;
+    /* Remove border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Smooth hover effect */
+    width: 200px;
+    align-self: center;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+    transform: scale(1.05);
+    /* Slightly enlarge button */
+}
+
+.submit-button:active {
+    background-color: #003f7f;
+    /* Even darker blue on click */
+    transform: scale(0.95);
+    /* Slightly shrink button on click */
+}
+
+.language-select-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    align-self: center; 
+}
+
+.language-select {
+    width: 200px;
+    /* Set the width of the dropdown */
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    /* Text color */
+    background-color: #f9f9f9;
+    /* Background color */
+    border: 2px solid #007BFF;
+    /* Blue border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    max-height: 150px; /* Set the max height to control when scrolling starts */
+  overflow-y: auto;  /* Enable vertical scrolling */
+}
+
+.language-select:hover {
+    background-color: #e3f2fd;
+    /* Light blue on hover */
+}
+
+.language-select:focus {
+    outline: none;
+    border-color: #0056b3;
+    /* Darker blue border on focus */
+    box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
+    /* Subtle shadow for focus */
+}
+
+.language-select option {
+    font-size: 16px;
+    /* Option font size */
+    color: #333;
+    /* Option text color */
+    background-color: #fff;
+    /* Option background */
+}

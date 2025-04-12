@@ -1,0 +1,254 @@
+.calendarContainer {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    height: 100vh;
+}
+
+.fc {
+   /* Dark Grey background */
+  border: 1px solid #808080; /* Medium Grey border */
+}
+.fc-toolbar {
+  background-color: #003366; /* Dark Blue for toolbar */
+  color: #FFFFFF; /* White for text contrast */
+}
+.fc-header-toolbar {
+  background-color: #003366; /* Dark Blue for header */
+  color: #FFFFFF; /* White for header text contrast */
+}
+.fc-daygrid-event {
+  background-color: #0056b3; /* Primary Blue for events */
+  color: #FFFFFF; /* White text for events */
+  border: 1px solid #003366; /* Dark Blue border for events */
+}
+.fc-daygrid-event:hover {
+  background-color: #226644; /* Medium Green on hover */
+  border-color: #1B4D33; /* Dark Green border on hover */
+}
+
+.fc-event-main-frame{
+  display: flex;
+  align-items: center;
+  background-color: #0056b3;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+
+.fc-event-main{
+  width: 97%;
+}
+
+.fc-event, .fc-event-dot {
+    background-color: transparent !important;
+    border:none !important;
+}
+
+.fc-event, .fc-event-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.fc-timegrid-event, .fc-event-time {
+    display: none;
+    box-shadow: none !important;
+    /* Hide the time to make it look like a strip */
+}
+
+.fc-daygrid-event, .fc-timegrid-event {
+  display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.fc-daygrid-event {
+    width: 100%;
+    height: auto;
+    /* Make sure it stretches across the full width */
+}
+
+.fc {
+    width: 80%;
+    padding :15px;
+    height: 100%;
+  }
+  
+
+
+  /* SIDEBAR */
+  .sidebar {
+    padding-bottom: 20px;
+    width: 20%;
+    height: 100%; /* Full height of the viewport */
+    overflow-y: auto; /* Make the sidebar scrollable */
+    padding: 10px;
+
+    background-color: #004080; /* Light Green */ 
+    color: #476A91; /* Dark Blue for text */
+  }
+  
+  .sidebar h2 {
+    text-align: center;
+    color: #39ff14;
+  }
+
+  .photoimg{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }
+
+  .textarea-style{
+    font-size: 16px;
+    min-width: 100px;
+    resize: none;
+    overflow: auto;
+    margin: 10px 0px;
+
+    width: 100%;
+  height: 150px;
+  min-height: 80px;
+  /* Prevents manual resizing */
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  }
+
+  .user-item{
+    background-color: #ADD8E6;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .pacient-request{
+    position: relative;
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+    background-color: white;
+    border-radius: 7px;
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+  }
+
+  .pacient-request::before{
+    content: ''; 
+    position: absolute; 
+    top: -12px; /* Adjust as needed */ 
+    left: 15px; /* Adjust for tail position */ 
+    width: 0; 
+    height: 0; 
+    border: 8px solid transparent; 
+    border-right-color: white; 
+    border-left: 0; 
+    margin-top: 0px;
+    transform: rotate(90deg);
+  }
+
+  .pacient-user{
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #ADD8E6;
+    border: 1px solid #4682B4;
+    border-radius: 5px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #ADD8E6;
+    border: 1px solid #4682B4;
+    border-radius: 5px;
+  }
+  
+  .user button {
+    background-color: #78bad0;
+    color: #4682B4;
+    border: 1px solid #4682B4;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .user button:hover {
+    background-color: #4682B4;
+    color: #ADD8E6;
+  }
+  
+
+  /* SAVE CANCEL BUTTONS */
+  /* Ensure the buttons are above everything else */
+.button-container {
+  position: fixed;
+  top: 10px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; /* Ensure it's above other elements */
+  display: flex;
+  gap: 10px; /* Space between the buttons */
+}
+
+/* Basic button styles */
+.shake-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #39ff14; /* Adjust as needed */
+  border: none;
+  border-radius: 5px;
+  color: #1e1e1e; /* Adjust as needed */
+}
+
+/* Shake animation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+.shake-button {
+  animation: shake 0.5s infinite;
+}
+
+
+/* TRASHBIN */
+
+.trashbin {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #FF6347; /* Red color */
+  border-radius: 50%; /* Makes it circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  z-index: 9999;
+  animation: swing 2s ease-in-out infinite;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(15deg);
+  }
+}

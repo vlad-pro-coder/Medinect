@@ -1,0 +1,219 @@
+.notification-button-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 5px;
+}
+
+.fullnotifs {
+    position: absolute;
+    top: 40px;
+    right: 5px;
+    width: 300px;
+    height: 0px;
+    background-color: white;
+    border: 1px solid grey;
+    z-index: 10000;
+    overflow: hidden;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.summary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    text-align: center;
+    width: 200px;
+    height: 35px;
+    background-color: #6C9ACB;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.expand {
+    animation: slideInNotif 0.3s forwards;
+}
+
+.goback {
+    animation: slideOutNotif 0.3s forwards;
+}
+
+.notifbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, width 0.3s;
+    width: 35px;
+    /* Initial width */
+    height: 35px;
+    border: 0px;
+    background-color: #6C9ACB;
+    border-radius: 50%;
+}
+
+.notifbtnopen {
+    animation: openborder 0.3s forwards;
+}
+
+.notifbtnclose {
+    animation: closeborder 0.3s forwards;
+}
+
+
+
+@keyframes openborder {
+    from {
+        border-radius: 50%;
+    }
+
+    to {
+        border-radius: 50%;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+}
+
+@keyframes closeborder {
+    to {
+        border-radius: 50%;
+    }
+
+    from {
+        border-radius: 50%;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+}
+
+@keyframes slideInNotif {
+    from {
+        opacity: 0;
+        width: 0px;
+    }
+
+    to {
+        opacity: 1;
+        width: 200px;
+    }
+}
+
+@keyframes slideOutNotif {
+    from {
+        opacity: 1;
+        width: 200px;
+    }
+
+    to {
+        opacity: 0;
+        width: 0px;
+    }
+}
+
+.openfullnotifs {
+    animation: openfullnotifs 0.3s forwards;
+}
+
+.closefullnotifs {
+    animation: closefullnotifs 0.3s forwards;
+}
+
+
+@keyframes openfullnotifs {
+    from {
+        height: 0px;
+        opacity: 0;
+    }
+
+    to {
+        height: 400px;
+        opacity: 1;
+    }
+}
+
+@keyframes closefullnotifs {
+    to {
+        height: 0px;
+        opacity: 0;
+    }
+
+    from {
+        height: 400px;
+        opacity: 1;
+    }
+}
+
+/* FriendRequest */
+
+.notification-item {
+    position: relative;
+    background-color: #E6F4FF;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 10px;
+
+}
+
+.ico {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+}
+
+.deleteBTN {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+}
+
+.notification .actions button.decline {
+    background-color: #ff5c5c;
+}
+
+.notification .actions button:hover {
+    opacity: 0.8;
+}
+
+.friendReq-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.timesinceupload {
+    margin-top: 10px;
+    position: absolute;
+    top:0px;
+    left:50%;
+    transform: translate(-50%, 0%);
+}
+
+.notification-new{
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06),
+              0 0 10px rgba(0, 123, 255, 0.4); /* Glow effect */
+  border-left: 4px solid #007bff;
+}
