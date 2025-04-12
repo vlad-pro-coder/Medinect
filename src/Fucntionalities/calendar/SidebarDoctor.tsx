@@ -1,6 +1,6 @@
 import { Draggable } from "@fullcalendar/interaction/index.js"
 import { get, getDatabase, onValue, ref } from "firebase/database"
-import { memo, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { app } from "../../App"
 import { v4 as uuidv4 } from 'uuid'
 import { getDownloadURL, getStorage, ref as refstg } from "firebase/storage"
