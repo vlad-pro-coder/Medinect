@@ -9,6 +9,7 @@ import AvarageTextMsg from './TypesOfNotifs/AvarageTextMesage';
 import DeleteDocMessage from './TypesOfNotifs/DeleteDocMessage';
 import EditDocMessage from './TypesOfNotifs/EditDocMessage';
 import NewDocMessage from './TypesOfNotifs/NewDocMessage';
+import InvestigationInviteNotif from './TypesOfNotifs/InvestigationInviteNotif';
 
 const getNrNewNotifs = (data: any) => {
 //gets how many of the loaded notifs are new or unread
@@ -97,6 +98,12 @@ function NotificationButton({ uid, status }: any) {
                                     data={notifications[key]}
                                     deleteNotif={deleteNotif}
                                     index={key}
+                                /> : <></>}
+                                {notifications[key].type == "InvestigationRequest" ? <InvestigationInviteNotif
+                                    data={notifications[key]}
+                                    deleteNotif={deleteNotif}
+                                    index={key}
+                                    uid={uid}
                                 /> : <></>}
                             </div>
                         })}

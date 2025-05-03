@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react';
 import { useEffect, useState } from 'react';
 import mime from 'react-native-mime-types';
+import { FaDownload } from "react-icons/fa";
 
 //prints a photo if that is a photo
-export const PrintPhoto = ({ url}: any) => {
-    return <img src={url} style={{ maxWidth: '100%', height: 'auto' }} />
+export const PrintPhoto = ({ url, additionalStyleClass }: any) => {
+    return <img className = {additionalStyleClass} src={url} style={{ maxWidth: '100%', height: 'auto' }} />
 }
 
 const fileIcons = {
@@ -18,10 +19,11 @@ const fileIcons = {
 
 //should display a custom icon based on the type or just a default type if there are none available
 //with this you can send more file types and download them
-export const Unsupported = ({ url}: any) => {
+export const Unsupported = ({ url, additionalStyleClass}: any) => {
 
     const getFileType = () => {
         const mimeType = mime.lookup(url); // Get MIME type from file URL
+        console.log(mimeType)
 
         if (mimeType) {
             if (mimeType.includes('image')) return 'image';
@@ -51,9 +53,9 @@ export const Unsupported = ({ url}: any) => {
 
     //the icon and a download button
     return (
-        <div className="container-files">
-            <Icon icon={icon} width={50} height={50} />
-            <button className="download-btn" onClick={downloadFile}>Download File</button>
+        <div className={`container-files ${additionalStyleClass}`}>
+            <Icon icon={icon} width={40} height={40} style={{color:'black'}} />
+            <button className="download-btn" onClick={downloadFile}><FaDownload/></button>
         </div>
     );
 }

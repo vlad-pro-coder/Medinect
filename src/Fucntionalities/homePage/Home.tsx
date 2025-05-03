@@ -22,6 +22,9 @@ import { FaUserFriends } from "react-icons/fa";
 import OrganizationDoctorAccountManager from "../FriendsList/OrganizationDoctorAccountManager";
 import { MdManageAccounts } from "react-icons/md";
 import { toast } from "react-toastify";
+import InvestigationMain from "../InvestigationPanel/InvestigationMain";
+import Logo from "../CustomComponents/FromPhotoToIcon";
+import investigationPhoto from "../../assets/investigation_button.svg"
 
 const SwicthTabContext = createContext({})//make a context to give variables to the child components in the react tree
                                         //used by live chat mostly to know with which conversation to start displaying instead of none
@@ -112,6 +115,10 @@ const Home = () => {
                     <SlidingButton willopen={expandsidebar} icon={FaUserEdit} onClick={() => { setselectedTab("chat") }}>Chat</SlidingButton>
                     <hr className="separator"></hr>
                 </div>}
+                {(status === "pacient" || status === "doctor") && <div className="wholebtns">
+                    <SlidingButton willopen={expandsidebar} icon={() => <Logo img_path={investigationPhoto} />} onClick={() => { setselectedTab("investigations") }}>Investigations</SlidingButton>
+                    <hr className="separator"></hr>
+                </div>}
             </div>
             <div className="main-content">
                 <SwicthTabContext.Provider value={{
@@ -124,6 +131,7 @@ const Home = () => {
                     {selectedTab === "meddocs" ? <Connector uid={id} status={status} /> : <></>}
                     {selectedTab === "chat" ? <ConnectorChat uid={id} DefaultSelectedChat={DefaultSelectedChat} /> : <></>}
                     {selectedTab === "doctoraccountmanager" ? <OrganizationDoctorAccountManager uid={id} /> : <></>}
+                    {selectedTab === "investigations" ? <InvestigationMain uid={id} status={status} /> : <></>}
                 </SwicthTabContext.Provider>
             </div>
         </div>

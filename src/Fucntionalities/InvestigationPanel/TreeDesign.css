@@ -1,0 +1,293 @@
+.right-panel{
+    position: relative;
+    flex-grow: 1;
+    overflow: auto;
+}
+
+/* TREE NODES */
+
+
+.tree-node{
+    top:500px;
+    position: absolute;
+    height: 70px;
+    width: 180px;
+    border-radius: 15px;
+    overflow: visible;
+    background-color: rgba(76, 175, 80, 0.2); /* Light green */
+  border: 2px solid #4CAF50; /* Solid green border */
+  color: #2E7D32; /* Dark green text */
+}
+
+/* END TREE NODES */
+
+
+/* NODE PATH */
+
+.path {
+    stroke: #2E7D32; /* Dark green */
+    stroke-width: 3px;
+    fill: none;
+    transition: stroke 0.3s ease;
+  }
+  
+  .path:hover {
+    stroke: #388E3C; /* Slightly brighter green on hover */
+  }
+
+/* END NODE PATH */
+
+
+
+.doctor-profile{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding:0px 10px;
+    transition: all 0.3s ease; /* Smooth transition for shadow */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    border: 1px solid #ddd; /* Optional: subtle border */
+}
+
+.doctor-profile:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06),
+              0 0 10px rgba(0, 123, 255, 0.4); /* Glow effect */
+  border-left: 4px solid #007bff;
+  border-bottom: 4px solid #007bff;
+}
+
+.doctor-profile img{
+    height: 50px;
+    width: 50px;
+    padding:5px;
+    border-radius: 50%;
+}
+
+.blame-summary{
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:200px;
+    border-radius: 10px;
+    z-index: 10;
+    position: absolute;
+    top: -240px;
+    transition: all 0.3s ease;
+    left: 110px;
+    background-color: rgba(0, 123, 255, 0.7); /* Slightly transparent blue */
+    border: 1px solid rgba(0, 123, 255, 0.3); /* Border with a subtle blue */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    gap:10px;
+}
+.doctor-profile div{
+    text-align: center;
+    font-size: 16px;
+    color: black; /* Initial color */
+    transition: color 0.3s ease; /* Smooth color transition */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+.expanded{
+    height: 250px;
+    overflow-y: auto;
+}
+
+.noshow{
+    height: 0px;
+    overflow: hidden;
+    padding:0px;
+    border:0px;
+}
+
+.small-text {
+    font-size: 0.875rem; /* Smaller than default text (14px) */
+    line-height: 1.5; /* Spacing for readability */
+    color: #4a5568; /* Neutral gray color */
+    font-weight: 400; /* Regular weight */
+    letter-spacing: 0.02em; /* Slightly spaced for better clarity */
+    text-transform: none; /* Normal casing */
+}
+
+/* NODE BUTTONS */
+
+.blame-button{
+    top:10px;
+    left:110px;
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.resource-button{
+    top:10px;
+    left:45px;
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.add-node-button{
+    top:22px;
+    left:170px;
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.node-text{
+    top:40px;
+    left:20px;
+    position: absolute;
+}
+
+/* RESOURCE STYLE */
+
+.resources-container{
+    background-color: rgba(102, 187, 106, 0.7); /* Light green with transparency */
+  border: 0px solid rgba(102, 187, 106, 0.4); /* Slightly darker green border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width:200px;
+    border-radius: 10px;
+    z-index: 10;
+    position: absolute;
+    top: -240px;
+    transition: all 0.3s ease;
+    left: 0px;
+    
+}
+
+.resource-files{
+    padding:10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:200px;
+    height:250px;
+    gap:10px;
+    overflow: auto;
+}
+
+/* ADD FILES POPUP OVERWRITE */
+
+.add-files-popup-overwrite{
+    width: 60% !important;
+    height: 50% !important;
+    align-items: center !important;
+}
+
+.add-files-button{
+    background-color: white;
+    border-radius: 50%;
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 35px;
+    padding:7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.delete-tree-node-btn{
+    position: absolute;
+    top:-15px;
+    left: -15px;
+    z-index: 1000; /* Ensures it stays above other elements */
+    font-size: 16px;
+    font-weight: bold;
+    width: 35px;
+    height: 35px;
+    color: white;
+    background-color: #EF4444; /* A nice blue for the button */
+    border: none;
+    border-radius: 50%; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .delete-tree-node-btn:hover {
+    background-color: #B91C1C; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+  }
+  
+  .delete-tree-node-btn:active {
+    transform: scale(1); /* Reset zoom effect on click */
+  }
+
+  .unsupported-files-overwrite{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100px !important;
+    height: 50px !important;
+  }
+
+  .unsupported-files-overwrite button{
+    width: 35px !important;
+    height: 35px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .draggable-container {
+    overflow: auto;
+    cursor: grab;
+    background-color: #f4f4f4; /* Light background for visibility */
+    border-bottom: 100px;
+    border-right: 100px;
+  }
+  
+  .draggable-container:active {
+    cursor: grabbing;
+  }
+
+
+  /* PHOTO IN RESOUCES */
+
+  .formular-img-tree {
+    width: 90%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .formular-img-tree:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  /* END PHOTO RESOURCES */

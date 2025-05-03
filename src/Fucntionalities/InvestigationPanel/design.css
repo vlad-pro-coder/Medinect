@@ -1,0 +1,140 @@
+.card {
+    display: flex;
+    padding: 15px;
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: center; /* Vertically center all elements */
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    flex-direction: row;
+    width: 80%;
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Slightly zoom in */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+  }
+
+  .card.expanded {
+    height: 150px; /* Increase the height to show more details */
+  }
+  
+  .photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+  
+  .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center text */
+    flex-grow: 1; /* Make the details container take up remaining space */
+    align-items: center; /* Horizontally center text */
+  }
+  
+  .fullname {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .contactNumber {
+    font-size: 14px;
+    color: #555;
+  }
+  
+
+  /* Input field for investigation title */
+.investigation-title {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Close button */
+.close-investigation-add-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* Pacient list container */
+.select-investigation-pacient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ADD MORE DOCTORS */
+.fixed-add-button {
+  z-index: 1000; /* Ensures it stays above other elements */
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff; /* A nice blue for the button */
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fixed-add-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+.fixed-add-button:active {
+  transform: scale(1); /* Reset zoom effect on click */
+}
+
+/* TOTAL DOCTORS STYLE */
+
+.all-doctors-container{
+  position: absolute;
+  top: 0px;
+  right:50px;
+  height: 200px;
+  width: 230px;
+  padding:10px;
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  transition: top ease-in-out 0.5s;
+}
+
+.all-doctors{
+  height: 176px;
+  display: flex;
+  align-items:center ;
+  overflow: auto;
+  flex-direction: column;
+  background-color: #D4C1E6;
+  gap:10px;
+  padding-bottom: 10px;
+}
+
+.all-doctors-btn{
+  background:#7E5A9B !important;
+}
+
+/* END TOTAL DOCTORS STYLE */
