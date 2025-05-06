@@ -1,7 +1,7 @@
-import { deleteObject, getDownloadURL, getMetadata, getStorage, listAll, ref, StorageReference } from "firebase/storage";
+import { deleteObject, getDownloadURL, getMetadata, getStorage, listAll, ref } from "firebase/storage";
 import { memo, useEffect, useState } from "react"
 import { app } from "../../../App";
-import { PrintPhoto, Unsupported } from "./FilesDisplay";
+import {  Unsupported } from "./FilesDisplay";
 import FileUpload from "../../MedicalDocuments/dependencies/FileUpload";
 import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";

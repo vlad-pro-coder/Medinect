@@ -1,0 +1,199 @@
+.history-container{
+    position: absolute;
+    height: 100%;
+    top:0px;
+    right:0px;
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+    transition: all ease-in-out 0.5s;
+    
+}
+
+.elements-of-history{
+    height: 100%;
+    top:0px;
+    right:0px;
+    width: 235px;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    overflow: auto;
+    flex-direction: column;
+
+    background-color: #f9f9f9; /* Light gray background */
+    border-left: 1px solid #ddd;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    transition: right 0.3s ease-in-out;
+    gap:10px;
+}
+
+.main-detection-container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.open-history-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007BFF;
+    height: 30px;
+    width: 15px;
+    font-size: 24px;
+    margin-top: 40px;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.close-history{
+    right:-235px !important;
+}
+
+.photo-half{
+    height: 100%;
+    background-color: #e0f7fa;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease-in-out 0.5s;
+}
+
+.schrinked-for-results{
+    width: 40% !important;
+}
+.expand-for-results{
+    width: 60% !important;
+}
+
+.results-container{
+    width: 0%;
+    overflow: hidden;
+    transition: all ease-in-out 0.5s;
+    background-color: #d4edda;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 30px;
+}
+
+.photo-for-detection{
+    width: 70%;
+    height: auto;
+    max-height: 100%;
+    border-radius: 10px;
+    transition: all ease 0.3s;
+}
+
+.photo-for-detection:hover{
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+.photo-for-detection:active {
+  transform: scale(1); /* Reset zoom effect on click */
+}
+
+
+.history-photo{
+    height: auto;
+    transition: all ease 0.3s;
+    width: 175px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.history-photo:active {
+    transform: scale(1); /* Reset zoom effect on click */
+  }
+
+  .history-photo:hover{
+    transform: scale(1.05); /* Slight zoom effect */
+  }
+  
+.whole-record{
+    width: 95%;
+    background-color: antiquewhite;
+    padding: 10px 0px;
+    border-radius: 10px;
+}
+
+.illnesses{
+    flex-direction: row;
+    display: flex;
+    gap:5px;
+    margin-top: 10px;
+    justify-content: center;
+    width: 80%;
+    flex-wrap: wrap;
+}
+
+.time-of-record{
+    font-size: 0.9em;
+    color: #757575; /* Subtle gray for a less prominent look */
+    font-style: italic;
+    text-align: right;
+    margin-top: 5px;
+}
+
+.illness{
+    background-color: #64b5f6;
+    border-radius: 10px;
+    padding:0px 10px;
+    color: #333;
+}
+
+.internet-search-illness{
+    font-size: 24px;
+    text-decoration: none;
+    color: #007BFF; /* Blue link color */
+    font-weight: 600; /* Slightly bold */
+    transition: color 0.2s ease-in-out, text-decoration 0.2s ease-in-out;
+}
+
+.internet-search-illness:hover{
+    color: #0056b3; /* Darker blue on hover */
+    text-decoration: underline; /* Adds underline on hover */
+}
+
+.warning-message {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 15px;
+    text-align: center;
+    font-size: 1em;
+    border-radius: 8px;
+    width: 60%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0s 0.5s; /* Delay visibility change after fade */
+}
+
+.warning-message.fade-in {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease;
+}
+
+.warning-message.fade-out {
+    opacity: 0;
+    visibility: hidden; /* Ensures it doesn't interfere with other elements */
+    transition: opacity 0.5s ease, visibility 0s 0.5s; /* Delays visibility change */
+}
+
+.warning-message p {
+    margin: 0;
+}

@@ -25,6 +25,8 @@ import { toast } from "react-toastify";
 import InvestigationMain from "../InvestigationPanel/InvestigationMain";
 import Logo from "../CustomComponents/FromPhotoToIcon";
 import investigationPhoto from "../../assets/investigation_button.svg"
+import { TbPhotoSearch } from "react-icons/tb";
+import IllnessDetectionMain from "../IllnessDetection/IllnessDetectionMain";
 
 const SwicthTabContext = createContext({})//make a context to give variables to the child components in the react tree
                                         //used by live chat mostly to know with which conversation to start displaying instead of none
@@ -100,11 +102,11 @@ const Home = () => {
                     <hr className="separator"></hr>
                 </div>}
                 {(status === "pacient" || status === "doctor") && <div className="wholebtns">
-                    <SlidingButton willopen={expandsidebar} icon={FaFileMedical} onClick={() => { setselectedTab("meddocs") }}>my medical documents</SlidingButton>
+                    <SlidingButton willopen={expandsidebar} icon={FaFileMedical} onClick={() => { setselectedTab("meddocs") }}>My Medical Documents</SlidingButton>
                     <hr className="separator"></hr>
                 </div >}
                 {(status === "pacient" || status === "doctor") && <div className="wholebtns">
-                    <SlidingButton willopen={expandsidebar} icon={CgProfile} onClick={() => { navigate('/home/profile', { state: { uid: id, status: status } }) }}>profile</SlidingButton>
+                    <SlidingButton willopen={expandsidebar} icon={CgProfile} onClick={() => { navigate('/home/profile', { state: { uid: id, status: status } }) }}>Profile</SlidingButton>
                     <hr className="separator"></hr>
                 </div>}
                 {(status === "pacient" || status === "doctor") && <div className="wholebtns">
@@ -117,6 +119,10 @@ const Home = () => {
                 </div>}
                 {(status === "pacient" || status === "doctor") && <div className="wholebtns">
                     <SlidingButton willopen={expandsidebar} icon={() => <Logo img_path={investigationPhoto} />} onClick={() => { setselectedTab("investigations") }}>Investigations</SlidingButton>
+                    <hr className="separator"></hr>
+                </div>}
+                {(status === "pacient" || status === "doctor") && <div className="wholebtns">
+                    <SlidingButton willopen={expandsidebar} icon={TbPhotoSearch} onClick={() => { setselectedTab("diseaseDetection") }}>Disease Detection</SlidingButton>
                     <hr className="separator"></hr>
                 </div>}
             </div>
@@ -132,6 +138,7 @@ const Home = () => {
                     {selectedTab === "chat" ? <ConnectorChat uid={id} DefaultSelectedChat={DefaultSelectedChat} /> : <></>}
                     {selectedTab === "doctoraccountmanager" ? <OrganizationDoctorAccountManager uid={id} /> : <></>}
                     {selectedTab === "investigations" ? <InvestigationMain uid={id} status={status} /> : <></>}
+                    {selectedTab === "diseaseDetection" ? <IllnessDetectionMain uid={id} /> : <></>}
                 </SwicthTabContext.Provider>
             </div>
         </div>
