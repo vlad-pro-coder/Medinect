@@ -8,6 +8,7 @@ import { IoSend } from "react-icons/io5";
 import { MdAddLink } from "react-icons/md";
 import PreviewSelectedRecord from "../MedicalDocuments/dependencies/PreviewSelectedRecordPopup";
 import Modal from 'react-modal';
+import { toast } from "react-toastify";
 
 interface chatFormat {
     messageID: string;
@@ -118,6 +119,11 @@ const Message = memo(({ chatinfo, photos, PerspectiveUID }: any) => {
             return <PrintPhoto url={url} />
         else
             return <Unsupported url={url} />
+    }
+
+    if(showDoc && !showDocPath){
+        toast("Medical document host is down or doesnt exist")
+        setshowDoc(false)
     }
 
     //here we print our modal(popup) with the clicked meddoc or any command 

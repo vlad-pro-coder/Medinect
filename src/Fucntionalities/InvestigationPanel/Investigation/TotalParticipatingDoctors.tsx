@@ -18,7 +18,7 @@ const TotalParticipatingDoctors = ({ InvestigationID }: any) => {
         }
         fetchDoctors()
 
-    }, [])
+    }, [InvestigationID])
 
     //to make a smooth animation i get the height of the buttons and can set the offset from top however i lake based on their current height
     //this will help me hide some buttons in case i need them  
