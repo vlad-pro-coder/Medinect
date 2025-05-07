@@ -5,15 +5,30 @@ import { getDownloadURL, getStorage, ref as refstg } from "firebase/storage"
 import FirstHalfPhoto from "./FirstHalfPhoto"
 import SecondHalfDiagnostic from "./SecondHalfDiagnostic"
 import './IllnessDesign.css'
-import { SaveFileAndResults } from "./SaveHistory"
+import { DeleteOldHistory, SaveFileAndResults } from "./SaveHistory"
 import { MdArrowLeft } from "react-icons/md";
 import ZoomablePhoto from "../MedicalDocuments/dependencies/ZoomableImage"
 
 export const IndexToIllness = ['Atelectasis', 'Cardiomegaly', 'Consolidation', 'Edema', 'Effusion', 'Emphysema', 'Fibrosis', 'Hernia', 'Infiltration', 'Mass', 'No Finding', 'Nodule', 'Pleural_Thickening', 'Pneumonia', 'Pneumothorax'];
 
+const GetDistanceOfDays = (LastDate:string) =>{
+    const givenDate = new Date(LastDate); // Parse the input date(iso)
+    const today = new Date(); // Get today's date
+    const timeDifference = today.getTime() - givenDate.getTime(); // Difference in milliseconds
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days
+    return daysDifference;
+}
+
+interface HistoryRecord{
+    photoURL: string;
+    PredictedIllnesses: any[];
+    Time: string;
+    RequestID:string;
+}
+
 const HistoryOfScans = ({ uid }: any) => {
 
-    const [History, setHistory] = useState<{ photoURL: string, PredictedIllnesses: any[], Time: string }[]>([])
+    const [History, setHistory] = useState<HistoryRecord[]>([])
     const [OpenStatus, setOpenStatus] = useState<boolean>(true)
 
     useEffect(() => {
@@ -50,6 +65,7 @@ const HistoryOfScans = ({ uid }: any) => {
                     photoURL: photoUrl,
                     PredictedIllnesses: results,
                     Time: time,
+                    RequestID:IDRequest,
                 };
             } catch (error) {
                 console.error("Error fetching photo and JSON:", error);
@@ -57,14 +73,34 @@ const HistoryOfScans = ({ uid }: any) => {
             }
         };
 
-        const unsub = onValue(ref(db, `users/${uid}/IllnessRequests`), async snapshot => {
-            if (snapshot.exists()) {
-                const List = Object.keys(snapshot.val()).map((key: string) => { return snapshot.val()[key] })
-                const promises = List.map(async (IDRequest) => { return await fetchPhotoAndResults(IDRequest) })
-                setHistory(await Promise.all(promises))
+        const handleHistoryCleanup = async (data: any, uid: string) => {
+            try {
+                const List = Object.keys(data).map((key: string) => data[key]);
+                
+                // Fetch photo and results concurrently
+                const promises = List.map((IDRequest) => fetchPhotoAndResults(IDRequest));
+                const History = await Promise.all(promises);
+                
+                // Filter out history older than a day
+                const HistoryDue = History.filter((elem: HistoryRecord) => GetDistanceOfDays(elem.Time) > 0);
+                console.log("Filtered Old History:", HistoryDue);
+                
+                // Delete old history
+                if (HistoryDue.length > 0) {
+                    await DeleteOldHistory(HistoryDue.map((elem: HistoryRecord) => elem.RequestID), uid);
+                }
+                
+                setHistory(History); // Update state
+            } catch (error) {
+                console.error("Error in handling history cleanup:", error);
             }
-            else
-                setHistory([])
+        };
+
+        const unsub = onValue(ref(db, `users/${uid}/IllnessRequests`),snapshot => {
+            if (snapshot.exists())
+                handleHistoryCleanup(snapshot.val(), uid); // Separate logic into a function
+            else 
+                setHistory([]);
         })
 
         return () => unsub()

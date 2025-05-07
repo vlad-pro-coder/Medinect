@@ -1,7 +1,8 @@
-import { getDatabase, push, ref } from "firebase/database"
+import { get, getDatabase, push, ref, set } from "firebase/database"
 import { app } from "../../App"
 import { getStorage,ref as stgref, uploadBytes, uploadString } from "firebase/storage"
 import { v4 as uuidv4 } from 'uuid'
+import StorageUniversalDeletion from "../MedicalDocuments/StorageUniversalDeletion"
 
 export const SaveFileAndResults = async (uid:string,photo:File,results:boolean[]) =>{
 
@@ -36,4 +37,29 @@ export const SaveFileAndResults = async (uid:string,photo:File,results:boolean[]
     } catch (error) {
       console.error("Error saving file and results:", error);
     }
+}
+
+export const DeleteOldHistory = async (ListOfOldHistory:string[],FromWho:string) =>{
+
+    if(ListOfOldHistory.length === 0)
+      return 
+    const db = getDatabase(app)
+
+    const HistoryOfUser = (await get(ref(db,`users/${FromWho}/IllnessRequests`))).val()
+
+    let toDetelekey:string[] = []
+    Object.keys(HistoryOfUser).forEach((key:string)=>{
+        if(ListOfOldHistory.includes(HistoryOfUser[key]))
+            toDetelekey.push(key)
+    })
+
+    await Promise.all(toDetelekey.map(async (key:string)=>{
+        return await set(ref(db,`users/${FromWho}/IllnessRequests/${key}`),null)
+    }))
+
+    await Promise.all(ListOfOldHistory.map(async (key:string)=>{
+      return await StorageUniversalDeletion(`IllnessDetectorRequests/${FromWho}/${key}`)
+  }))
+
+
 }
