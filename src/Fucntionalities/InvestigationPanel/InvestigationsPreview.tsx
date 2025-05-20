@@ -1,5 +1,5 @@
 import { get, getDatabase, onValue, ref } from "firebase/database"
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import { app } from "../../App"
 import { FaPlus } from "react-icons/fa";
 import NewInvestigationPopUp from "./NewInvestigationPopUp";
@@ -10,35 +10,74 @@ interface Investigation {
     InvestigationName: string;
     LastEdit: string;
     DateOfCreation: string;
-    DoctorParticipants: string;
+    DoctorParticipants: string[];
     Pacient: string;
     InvestigationID: string;//also the root node id
 }
 
-const DisplayInvestigations = ({ InvestigationMetadata, status, currentInvestigation, setcurrentInvestigation, PacientNames, uid }: any) => {
+const DisplayInvestigations = memo(({ InvestigationID, status, currentInvestigation, setcurrentInvestigation, PacientNames, uid }: any) => {
 
     const [IsHovered, setIsHovered] = useState<boolean>(false)
+    const [Metadata, setMetadata] = useState<Investigation>({
+        InvestigationName: "",
+        LastEdit: "",
+        DateOfCreation: "",
+        DoctorParticipants: [],
+        Pacient: "",
+        InvestigationID: ""//also the root node id
+    })
+
+    useEffect(() => {
+
+        const db = getDatabase()
+
+        const fetchdata = async (pacientID: string): Promise<string> => {
+            const firstName = await get(ref(db, `users/${pacientID}/profile/FirstName`)).then(snapshot => snapshot.val());
+            const lastName = await get(ref(db, `users/${pacientID}/profile/LastName`)).then(snapshot => snapshot.val());
+            return `${firstName} ${lastName}`;
+        };
+
+        const unsub = onValue(ref(db, `Investigations/${InvestigationID}`), async snapshot => {
+            if (snapshot.exists()) {
+                let temp: Investigation = snapshot.val()
+                temp.Pacient = await fetchdata(temp.Pacient)
+                setMetadata(temp)
+            }
+            else
+                setMetadata({
+                    InvestigationName: "",
+                    LastEdit: "",
+                    DateOfCreation: "",
+                    DoctorParticipants: [],
+                    Pacient: "",
+                    InvestigationID: ""//also the root node id
+                })
+        })
+
+        return () => unsub()
+
+    }, [uid, InvestigationID])
 
     if (status == "pacient")
         return <div className="investigation-with-leave"
         >
             <div
-                key={InvestigationMetadata.InvestigationID}
-                className={`investigation-item ${currentInvestigation === InvestigationMetadata.InvestigationID ? 'active' : ''} ${!InvestigationMetadata.DoctorParticipants ? 'hover-over-width' : 'not-hover-over-width'}`}
-                onClick={() => { setcurrentInvestigation(InvestigationMetadata.InvestigationID) }}
+                key={Metadata.InvestigationID}
+                className={`investigation-item ${currentInvestigation === Metadata.InvestigationID ? 'active' : ''} ${!Metadata.DoctorParticipants ? 'hover-over-width' : 'not-hover-over-width'}`}
+                onClick={() => { setcurrentInvestigation(Metadata.InvestigationID) }}
             >
                 <div className="investigation-name">
-                    {InvestigationMetadata.InvestigationName}
+                    {Metadata.InvestigationName}
                 </div>
                 <div className="investigation-summary">
-                    <div>Created: {new Date(InvestigationMetadata.DateOfCreation).toLocaleDateString()} {new Date(InvestigationMetadata.DateOfCreation).toLocaleTimeString()}</div>
-                    <div>For: {PacientNames[InvestigationMetadata.Pacient]}</div>
+                    <div>Created: {new Date(Metadata.DateOfCreation).toLocaleDateString()} {new Date(Metadata.DateOfCreation).toLocaleTimeString()}</div>
+                    <div>For: {Metadata.Pacient}</div>
                 </div>
             </div>
-            {!InvestigationMetadata.DoctorParticipants ? <button
+            {!Metadata.DoctorParticipants ? <button
                 className="docevent"
                 style={{ height: '40px', width: '40px', backgroundColor: "#EF4444" }}
-                onClick={() => { DeleteInvestigation(InvestigationMetadata.InvestigationID) }}
+                onClick={() => { DeleteInvestigation(Metadata.InvestigationID) }}
             ><ImExit /></button> : <></>}
         </div>
 
@@ -47,61 +86,44 @@ const DisplayInvestigations = ({ InvestigationMetadata, status, currentInvestiga
         onMouseLeave={() => setIsHovered(false)}
     >
         <div
-            key={InvestigationMetadata.InvestigationID}
-            className={`investigation-item ${currentInvestigation === InvestigationMetadata.InvestigationID ? 'active' : ''} ${IsHovered ? 'hover-over-width' : 'not-hover-over-width'}`}
-            onClick={() => { setcurrentInvestigation(InvestigationMetadata.InvestigationID) }}
+            key={Metadata.InvestigationID}
+            className={`investigation-item ${currentInvestigation === Metadata.InvestigationID ? 'active' : ''} ${IsHovered ? 'hover-over-width' : 'not-hover-over-width'}`}
+            onClick={() => { setcurrentInvestigation(Metadata.InvestigationID) }}
         >
             <div className="investigation-name">
-                {InvestigationMetadata.InvestigationName}
+                {Metadata.InvestigationName}
             </div>
             <div className="investigation-summary">
-                <div>Created: {new Date(InvestigationMetadata.DateOfCreation).toLocaleDateString()} {new Date(InvestigationMetadata.DateOfCreation).toLocaleTimeString()}</div>
-                <div>For: {PacientNames[InvestigationMetadata.Pacient]}</div>
+                <div>Created: {new Date(Metadata.DateOfCreation).toLocaleDateString()} {new Date(Metadata.DateOfCreation).toLocaleTimeString()}</div>
+                <div>For: {Metadata.Pacient}</div>
             </div>
         </div>
         {IsHovered ? <button
             className="docevent"
             style={{ height: '40px', width: '40px', backgroundColor: "#EF4444" }}
-            onClick={() => { LeaveInvestigation(InvestigationMetadata.InvestigationID, uid) }}
+            onClick={() => { LeaveInvestigation(Metadata.InvestigationID, uid) }}
         ><ImExit /></button> : <></>}
     </div>
-}
+})
 
 const InvestigationsPreview = ({ uid, status, setcurrentInvestigation, currentInvestigation }: any) => {
 
-    const [InvestigationsMetadata, setInvestigationsMetadata] = useState<Investigation[]>([])
+    const [Investigations, setInvestigations] = useState<string[]>([])
 
     const [IsOpenAddInvestigationPopUp, setIsOpenAddInvestigationPopUp] = useState<boolean>(false)
-    const [PacientNames, setPacientNames] = useState<{ [key: string]: string }>({})
 
     useEffect(() => {
         const db = getDatabase(app);
         let unsub1: any = () => { }; // Default no-op function for cleanup
 
-        const fetchInvestigationsMetadata = async (investigations: string[]) => {
-            const investigationMetadataPromises = investigations.map(async (InvestigationID) => {
-                const refPath = ref(db, `Investigations/${InvestigationID}`);
-                const investigationSnapshot = await get(refPath);
-                if (investigationSnapshot.exists()) {
-                    const investigationData = investigationSnapshot.val();
-                    investigationData.InvestigationID = InvestigationID; // Include ID for filtering later
-                    return investigationData;
-                }
-                return null;
-            });
-
-            // Resolve all metadata fetches and filter out null values
-            const resolvedMetadata = (await Promise.all(investigationMetadataPromises)).filter(Boolean);
-            setInvestigationsMetadata(resolvedMetadata);
-        };
-
         try {
             unsub1 = onValue(ref(db, `users/${uid}/ParticipatingInvestigations`), (snapshot) => {
                 if (snapshot.exists()) {
+                    console.log(snapshot.val(), 'check for refresh')
                     const investigations = Object.keys(snapshot.val()).map((key) => snapshot.val()[key]);
-                    fetchInvestigationsMetadata(investigations); // Fetch metadata asynchronously
+                    setInvestigations(investigations)
                 } else {
-                    setInvestigationsMetadata([]); // Clear metadata if no investigations
+                    setInvestigations([]); // Clear metadata if no investigations
                 }
             });
         } catch (err) {
@@ -114,55 +136,21 @@ const InvestigationsPreview = ({ uid, status, setcurrentInvestigation, currentIn
         };
     }, [uid]); // Only depends on `uid`
 
-    console.log(InvestigationsMetadata)
-
-    useEffect(() => {
-        const db = getDatabase(app)
-
-        const fetchdata = async (pacientID: string): Promise<string> => {
-            const firstName = await get(ref(db, `users/${pacientID}/profile/FirstName`)).then(snapshot => snapshot.val());
-            const lastName = await get(ref(db, `users/${pacientID}/profile/LastName`)).then(snapshot => snapshot.val());
-            return `${firstName} ${lastName}`;
-        };
-
-        const fetchAllNames = async (InvestigationsMetadata: { Pacient: string }[]) => {
-            const namesPacient: { [key: string]: string } = {};
-            // Create an array of promises
-            const fetchPromises = InvestigationsMetadata.map(async (Investigation) => {
-                const name = await fetchdata(Investigation.Pacient);
-                namesPacient[Investigation.Pacient] = name;
-            });
-
-            // Wait for all promises to resolve
-            await Promise.all(fetchPromises);
-
-            // Return the populated namesPacient object
-            return namesPacient;
-        };
-
-        // Example usage:
-        (async () => {
-            setPacientNames(await fetchAllNames(InvestigationsMetadata))
-        })();
-
-    }, [InvestigationsMetadata])
-
     if (status == "pacient")
         return (
             <div className="investigation-list">
-                {InvestigationsMetadata.length === 0 ? (
+                {Investigations.length === 0 ? (
                     <div className="no-investigations">
                         No investigations in progress
                     </div>
                 ) : (
-                    InvestigationsMetadata.map((InvestigationMetadata: Investigation) => {
+                    Investigations.map((InvestigationID: string) => {
                         return (
                             <DisplayInvestigations
-                                InvestigationMetadata={InvestigationMetadata}
+                                InvestigationID={InvestigationID}
                                 status={status}
                                 currentInvestigation={currentInvestigation}
                                 setcurrentInvestigation={setcurrentInvestigation}
-                                PacientNames={PacientNames}
                                 uid={uid}
                             />
                         );
@@ -181,19 +169,18 @@ const InvestigationsPreview = ({ uid, status, setcurrentInvestigation, currentIn
                 onClose={() => { setIsOpenAddInvestigationPopUp(false) }}
             />
         )}
-        {InvestigationsMetadata.length === 0 ? (
+        {Investigations.length === 0 ? (
             <div className="no-investigations">
                 No investigations in progress
             </div>
         ) : (
-            InvestigationsMetadata.map((InvestigationMetadata: Investigation) => {
+            Investigations.map((InvestigationID: string) => {
                 return (
                     <DisplayInvestigations
-                        InvestigationMetadata={InvestigationMetadata}
+                        InvestigationID={InvestigationID}
                         status={status}
                         currentInvestigation={currentInvestigation}
                         setcurrentInvestigation={setcurrentInvestigation}
-                        PacientNames={PacientNames}
                         uid={uid}
                     />
                 );

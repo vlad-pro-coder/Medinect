@@ -154,7 +154,12 @@ const ResourceButton = ({ NodeID, MasterID, uid, NodeFullPath,EditMode,status }:
         <div onClick={(e) => { 
             e.stopPropagation()
             setopenFiles(!openFiles) 
-            }} className="resource-button">
+            }} 
+            onDoubleClick={(e)=>{
+                e.preventDefault()
+                e.stopPropagation()
+            }}
+            className="resource-button">
             <FaFolder />
         </div>
         <div className={`resources-container ${openFiles ? "expanded" : "noshow"}`}>

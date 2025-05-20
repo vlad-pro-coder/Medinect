@@ -52,14 +52,18 @@ const NewInvestigationPopUp = ({ uid, onClose }: any) => {
     const [SelectedPacient, setSelectedPacient] = useState<string>("")
     const [expandedPacientUid, setExpandedPacientUid] = useState<string | null>(null) // Track the currently expanded patient
 
-    if (SelectedPacient !== "" && InvestigationTitle !== "") {
-        NewInvestigationGenerator(SelectedPacient, uid, InvestigationTitle)
-        onClose()
-    }
-    if (InvestigationTitle === "" && SelectedPacient !== "") {
-        toast("The title field is mandatory")
-        setSelectedPacient("")
-    }
+
+    useEffect(() => {
+        if (SelectedPacient !== "" && InvestigationTitle !== "") {
+            NewInvestigationGenerator(SelectedPacient, uid, InvestigationTitle)
+            onClose()
+        }
+        if (InvestigationTitle === "" && SelectedPacient !== "") {
+            toast("The title field is mandatory")
+            setSelectedPacient("")
+        }
+    }, [SelectedPacient, InvestigationTitle, NewInvestigationGenerator, setSelectedPacient, onClose, uid])
+
 
     useEffect(() => {
         //listen for new friends made while on this page
@@ -80,17 +84,17 @@ const NewInvestigationPopUp = ({ uid, onClose }: any) => {
                 <div className="close-investigation-add-popup" onClick={onClose}><RxCross2 /></div>
                 <input className="investigation-title" value={InvestigationTitle} onChange={(e: any) => { setInvestigationTitle(e.target.value) }} />
                 <div className="select-investigation-pacient">
-                {pacients.map((Pacientuid: string) => {
-                    return (
-                        <PacientPreview 
-                            key={Pacientuid}
-                            uid={Pacientuid}
-                            setSelectedPacient={setSelectedPacient}
-                            expandedPacientUid={expandedPacientUid}
-                            setExpandedPacientUid={setExpandedPacientUid} // Pass down state setter
-                        />
-                    )
-                })}
+                    {pacients.map((Pacientuid: string) => {
+                        return (
+                            <PacientPreview
+                                key={Pacientuid}
+                                uid={Pacientuid}
+                                setSelectedPacient={setSelectedPacient}
+                                expandedPacientUid={expandedPacientUid}
+                                setExpandedPacientUid={setExpandedPacientUid} // Pass down state setter
+                            />
+                        )
+                    })}
                 </div>
             </div>
         </div>

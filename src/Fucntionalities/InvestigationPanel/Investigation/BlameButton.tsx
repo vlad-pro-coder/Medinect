@@ -43,7 +43,12 @@ const BlameButton = ({DoctorsWhoEdited}:any) =>{
     <div className="blame-button" onClick={(e)=>{
         e.stopPropagation()
         setShowDoctors(!ShowDoctors)
-        }}><IoIosPeople/></div>
+        }}
+        onDoubleClick={(e)=>{
+                e.preventDefault()
+                e.stopPropagation()
+            }}
+        ><IoIosPeople/></div>
 </div>
 }
 

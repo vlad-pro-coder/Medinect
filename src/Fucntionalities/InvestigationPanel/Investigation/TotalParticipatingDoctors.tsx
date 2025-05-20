@@ -14,7 +14,7 @@ const TotalParticipatingDoctors = ({ InvestigationID }: any) => {
         const db = getDatabase(app)
         
         const fetchDoctors = async () =>{
-            setTotalDoctors((await get(ref(db,`Investigations/${InvestigationID}/DoctorParticipants`))).val())
+            setTotalDoctors((await get(ref(db,`Investigations/${InvestigationID}/DoctorParticipants`))).val() || [])
         }
         fetchDoctors()
 
