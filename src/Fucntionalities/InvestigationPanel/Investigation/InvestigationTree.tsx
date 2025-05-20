@@ -1,4 +1,4 @@
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, onValue, ref, set } from "firebase/database";
 import { useEffect, useState } from "react";
 import { app } from "../../../App";
 import BlameButton from "./BlameButton";
@@ -63,25 +63,60 @@ const drawSLine = (startX: number, startY: number, endX: number, endY: number) =
     return `M${startX},${startY} C${controlPoint1X},${controlPoint1Y} ${controlPoint2X},${controlPoint2Y} ${endX},${endY}`;
 };
 
-const InvestigationTree = ({ InvestigationID, WhoAccesed,status }: { InvestigationID: string, WhoAccesed: string,status:string }) => {
+const InvestigationTree = ({ InvestigationID, WhoAccesed, status }: { InvestigationID: string, WhoAccesed: string, status: string }) => {
 
     const [FlattenedTree, setFlattenedTree] = useState<{
         [key: string]: InvestigationNodeWithDepth;
     }>({});
 
     const [IsTreeEdit, setIsTreeEdit] = useState<boolean>(false)
-    const [OpenAddDoctor,setOpenAddDoctor] = useState<boolean>(false)
+    const [OpenAddDoctor, setOpenAddDoctor] = useState<boolean>(false)
+    const [MainPathInvestigation, setMainPathInvestigation] = useState<string[]>([])
+    const [LastNodeGoodPath, setLastNodeGoodPath] = useState<string>("")
 
 
     const TreeNodeComponents = ({ node, ID }: { node: InvestigationNodeWithDepth, ID: string }) => {
 
         const { x, y } = CalculatePos2D(node.horizontal, node.vertical)
         const { Startx, Starty } = CalculateStartPathPoint(node.horizontal, node.vertical)
+        
+
+        useEffect(() => {
+
+            const getNodesFromPath = () => {
+                // Regular expression to match UUIDs
+                const uuidPattern = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/g;
+
+                // Find all matches
+                const ids = node.DataBaseFullPath.match(uuidPattern) || [];
+
+                // Output the extracted IDs
+                console.log(ids);
+                return ids
+            }
+
+            if (LastNodeGoodPath === ID && JSON.stringify(getNodesFromPath()) !== JSON.stringify(MainPathInvestigation)) {
+                console.log(getNodesFromPath())
+                setMainPathInvestigation(getNodesFromPath())
+            }
+        }, [ID])
+
+
+        const ToChangeFocus = async (e:any)=>{
+                if(status==="doctor")
+                {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    const db = getDatabase(app)
+                    set(ref(db,`Investigations/${InvestigationID}/LastAccurateNode`),ID)
+                }
+            }
 
         return <div
             key={ID}
-            className="tree-node"
+            className={`tree-node ${MainPathInvestigation.includes(ID)?"illuminated":""}`}
             style={{ top: byDeafaultOffsetY + y, left: byDeafaultOffsetX + x, position: "absolute" }}
+            onDoubleClick={ToChangeFocus}  
         >
             {node.ChildrenNodesIds.map((childKey: string) => {
                 const { Endx, Endy } = CalculateEndPathPoint(FlattenedTree[childKey].horizontal, FlattenedTree[childKey].vertical - node.vertical)
@@ -91,16 +126,16 @@ const InvestigationTree = ({ InvestigationID, WhoAccesed,status }: { Investigati
                         className="path"
                         strokeWidth="2"
                         fill="transparent"
-                        style={{color:'linear-gradient(90deg, #4caf50, #8bc34a)'}}
+                        style={{ color: 'linear-gradient(90deg, #4caf50, #8bc34a)' }}
                     />
                 </svg>
             })
             }
             <BlameButton DoctorsWhoEdited={node.EveryOneWhoEdited} />
-            <ResourceButton NodeID={ID} MasterID={InvestigationID} uid={WhoAccesed} NodeFullPath={node.DataBaseFullPath} EditMode={IsTreeEdit} status={status}/>
-            {status==="doctor"?<div className="add-node-button" onClick={() => { CreateNewTreeNode(node.DataBaseFullPath, WhoAccesed) }}>
+            <ResourceButton NodeID={ID} MasterID={InvestigationID} uid={WhoAccesed} NodeFullPath={node.DataBaseFullPath} EditMode={IsTreeEdit} status={status} />
+            {status === "doctor" ? <div className="add-node-button" onClick={() => { CreateNewTreeNode(node.DataBaseFullPath, WhoAccesed) }}>
                 <FaPlus />
-            </div>:<></>}
+            </div> : <></>}
             {IsTreeEdit && ID !== InvestigationID ? <div className="delete-tree-node-btn" onClick={() => {
                 DeleteNodeAndItsChildren(node.DataBaseFullPath, InvestigationID, ID, FlattenedTree)
             }}>
@@ -184,14 +219,26 @@ const InvestigationTree = ({ InvestigationID, WhoAccesed,status }: { Investigati
         return () => unsub();
     }, [InvestigationID]);
 
+    useEffect(() => {
+        const db = getDatabase(app);
+        const unsub = onValue(ref(db, `Investigations/${InvestigationID}/LastAccurateNode`), (snapshot) => {
+            if (snapshot.exists())
+                setLastNodeGoodPath(snapshot.val())
+            else
+                setLastNodeGoodPath("")
+        });
+
+        return () => unsub();
+    }, [InvestigationID])
+
     if (Object.keys(FlattenedTree).length === 0) return <div>Cannot load Tree</div>;
     return <div className="right-panel" >
-        <TotalParticipatingDoctors InvestigationID={InvestigationID}/>
-        {OpenAddDoctor?<AddDoctorInvestigationPopUp onClose={()=>{setOpenAddDoctor(false)}} WhoSent={WhoAccesed} IDinvestigation={InvestigationID}/>:<></>}
-        {status ==="doctor"?<div style={{ position: 'sticky', top: '0px', left: "0px", display: 'flex', flexDirection: 'row', zIndex: '3000', padding: '10px', justifyContent: 'space-around', width: "100px" }}>
-            <button className="fixed-add-button" onClick={()=>{setOpenAddDoctor(true)}}><IoPersonAddSharp /></button>
+        <TotalParticipatingDoctors InvestigationID={InvestigationID} />
+        {OpenAddDoctor ? <AddDoctorInvestigationPopUp onClose={() => { setOpenAddDoctor(false) }} WhoSent={WhoAccesed} IDinvestigation={InvestigationID} /> : <></>}
+        {status === "doctor" ? <div style={{ position: 'sticky', top: '0px', left: "0px", display: 'flex', flexDirection: 'row', zIndex: '3000', padding: '10px', justifyContent: 'space-around', width: "100px" }}>
+            <button className="fixed-add-button" onClick={() => { setOpenAddDoctor(true) }}><IoPersonAddSharp /></button>
             <button className="fixed-add-button" style={{ left: '50px' }} onClick={() => { setIsTreeEdit(!IsTreeEdit) }}><CiEdit /></button>
-        </div>:<></>}
+        </div> : <></>}
         {
 
             Object.keys(FlattenedTree).map((key: string) => {

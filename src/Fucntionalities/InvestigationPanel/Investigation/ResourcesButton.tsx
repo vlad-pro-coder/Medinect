@@ -151,7 +151,10 @@ const ResourceButton = ({ NodeID, MasterID, uid, NodeFullPath,EditMode,status }:
 
     return <div>
         {addFile ? <AddFilePopUp onClose={()=>{setaddFile(false)}} NodeID={NodeID} WhoDidTheChange={uid} MasterID={MasterID} NodeFullPath={NodeFullPath} /> : <></>}
-        <div onClick={() => { setopenFiles(!openFiles) }} className="resource-button">
+        <div onClick={(e) => { 
+            e.stopPropagation()
+            setopenFiles(!openFiles) 
+            }} className="resource-button">
             <FaFolder />
         </div>
         <div className={`resources-container ${openFiles ? "expanded" : "noshow"}`}>

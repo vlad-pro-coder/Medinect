@@ -1,10 +1,10 @@
 import { getDownloadURL, getStorage, ref as storageref } from "firebase/storage"
-import { useEffect, useRef, useState } from "react"
+import { memo, useEffect, useRef, useState } from "react"
 import { app } from "../../App"
 import { get, getDatabase, onValue, ref } from "firebase/database"
 
 //this is the mini profile the one on which you can click and it expands
-const MiniProfileView = ({ uid, offsetTop, offsetLeft }: any) => {
+const MiniProfileView = memo(({ uid, offsetTop, offsetLeft }: any) => {
 
     const [profilepic, setprofilepic] = useState<string>("")//the profile picture of the one in this container
     const [showadditional, setshowadditional] = useState<boolean>(false)//small or big state
@@ -70,6 +70,6 @@ const MiniProfileView = ({ uid, offsetTop, offsetLeft }: any) => {
             </div> :
             <></>}
     </div>
-}
+})
 
 export default MiniProfileView

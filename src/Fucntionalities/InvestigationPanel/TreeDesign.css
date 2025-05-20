@@ -291,3 +291,9 @@
   }
 
   /* END PHOTO RESOURCES */
+
+  .illuminated{
+      border: 2px solid #2e8b57; /* Sea green outline */
+  background-color: #88cc8c; /* Pale green fill */
+  box-shadow: 0 10px 20px rgba(46, 139, 87, 0.5); /* Subtle green shadow */
+  }

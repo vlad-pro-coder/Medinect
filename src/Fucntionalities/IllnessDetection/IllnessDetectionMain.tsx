@@ -82,7 +82,7 @@ const HistoryOfScans = ({ uid }: any) => {
                 const History = await Promise.all(promises);
                 
                 // Filter out history older than a day
-                const HistoryDue = History.filter((elem: HistoryRecord) => GetDistanceOfDays(elem.Time) > 0);
+                const HistoryDue = History.filter((elem: HistoryRecord) => GetDistanceOfDays(elem.Time) > 7);
                 console.log("Filtered Old History:", HistoryDue);
                 
                 // Delete old history

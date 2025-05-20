@@ -40,7 +40,10 @@ const BlameButton = ({DoctorsWhoEdited}:any) =>{
             </div>
         ))}
     </div>
-    <div className="blame-button" onClick={()=>{setShowDoctors(!ShowDoctors)}}><IoIosPeople/></div>
+    <div className="blame-button" onClick={(e)=>{
+        e.stopPropagation()
+        setShowDoctors(!ShowDoctors)
+        }}><IoIosPeople/></div>
 </div>
 }
 
